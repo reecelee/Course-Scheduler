@@ -1,59 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>10-Semester Schedule Generator</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div class="background-image">
-        <header class="floating-bar">
-            <div class="input-group">
-                <label for="major">Major:</label>
-                <select id="major">
-                    <option value="majors/CS.json">Computer Science</option>
-                    <option value="majors/ACCT.json">Accounting</option>
-                </select>
-            </div>
+      <header class="floating-bar">
+        <div class="input-group">
+          <label for="major">Major:</label>
+          <select id="major">
+            <option value="majors/CS.json">Computer Science</option>
+            <option value="majors/ACCT.json">Accounting</option>
+            <! <option value="majors/VA.json">Visual Arts</option> -->
+            <option value="majors/HIST.json">History</option>
+          </select>
+        </div>
 
-            <div class="input-group">
-                <label for="minor1">Minor 1:</label>
-                <select id="minor1">
-                    <option value="minors/ENTR.json">Entrepreneurship</option>
-                </select>
-            </div>
+        <div class="input-group">
+          <label for="minor1">Minor 1:</label>
+          <select id="minor1">
+            <option value="minors/ENTR.json">Entrepreneurship</option>
+            <option value="minors/PSYC.json">Psychology</option>
+            <option value="minors/ASTU.json">Asian Studies</option>
+          </select>
+        </div>
 
-            <div class="input-group">
-                <label for="minor2">Minor 2:</label>
-                <select id="minor2">
-                    <option value="minors/PAS.json">Pacific Studies</option>
-                </select>
-            </div>
+        <div class="input-group">
+          <label for="minor2">Minor 2:</label>
+          <select id="minor2">
+            <option value="minors/PAS.json">Pacific Studies</option>
+            <option value="minors/SOCW.json">Social Work</option>
+            <option value="minors/HHS.json">Health and Human Sciences</option>
+          </select>
+        </div>
 
-            <div class="input-group">
-                <label for="start-semester">Starting Semester:</label>
-                <select id="start-semester">
-                    <option value="Fall 2024">Fall 2024</option>
-                    <option value="Winter 2025">Winter 2025</option>
-                    <option value="Spring 2025">Spring 2025</option>
-                    <option value="Fall 2025">Fall 2025</option>
-                    <option value="Winter 2026">Winter 2026</option>
-                    <option value="Spring 2026">Spring 2026</option>
-                </select>
-            </div>
-            
+        <div class="input-group">
+          <label for="generals">Generals:</label>
+          <select id="generals">
+            <option value="generals/EIL.json">EIL</option>
+            <option value="generals/DOM.json">Domestic</option>
+          </select>
+        </div>
 
-            <button id="calculate-schedule">Generate Schedule</button>
-        </header>
+        <div class="input-group">
+          <label for="start-semester">Starting Semester:</label>
+          <select id="start-semester">
+            <option value="Fall 2024">Fall 2024</option>
+            <option value="Winter 2025">Winter 2025</option>
+            <option value="Spring 2025">Spring 2025</option>
+            <option value="Fall 2025">Fall 2025</option>
+            <option value="Winter 2026">Winter 2026</option>
+            <option value="Spring 2026">Spring 2026</option>
+          </select>
+        </div>
 
-        <main>
-            <h1>Plan Your Academic Journey</h1>
-            <div id="schedule"></div>
-        </main>
+        <button id="calculate-schedule">Generate Schedule</button>
+      </header>
+
+      <main>
+        <h1>Plan Your Academic Journey</h1>
+        <div id="schedule"></div>
+      </main>
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

@@ -1,0 +1,40 @@
+{
+    "courses": [
+      {
+        "course_number": "HUM 302",
+        "course_name": "Cultures of Asia",
+        "semesters_offered": ["Winter"],
+        "credits": 3,
+        "prerequisites": []
+      },
+      {
+        "course_number": "HIST 344",
+        "course_name": "Modern China",
+        "semesters_offered": ["Fall"],
+        "credits": 3,
+        "prerequisites": []
+      },
+      {
+        "course_number": "HIST 346",
+        "course_name": "Modern Northeast Asia",
+        "semesters_offered": ["Winter"],
+        "credits": 3,
+        "prerequisites": []
+      },
+      {
+        "course_number": "HIST 390R",
+        "course_name": "Special Topic in History (Topic on Asia)",
+        "semesters_offered": ["Fall", "Winter", "Spring"],
+        "credits": 3,
+        "prerequisites": []
+      },
+      {
+        "course_number": "HIST 485",
+        "course_name": "Junior Tutorial in History: Vietnam War",
+        "semesters_offered": ["Winter"],
+        "credits": 3,
+        "prerequisites": []
+      }
+    ]
+  }
+  

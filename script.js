@@ -3,6 +3,7 @@ document.getElementById("calculate-schedule").addEventListener("click", async ()
         const major = document.getElementById("major").value;
         const minor1 = document.getElementById("minor1").value;
         const minor2 = document.getElementById("minor2").value;
+        const generals = document.getElementById("generals").value;
         const startSemester = document.getElementById("start-semester").value;
 
         // Fetch JSON data for the programs
@@ -15,12 +16,14 @@ document.getElementById("calculate-schedule").addEventListener("click", async ()
         const majorData = await fetchJson(major);
         const minor1Data = await fetchJson(minor1);
         const minor2Data = await fetchJson(minor2);
+        const generals2Data = await fetchJson(generals)
 
         // Combine all courses
         const allCourses = [
             ...majorData.courses,
             ...minor1Data.courses,
             ...minor2Data.courses,
+            ...generals2Data.courses,
         ];
 
         // Map to represent semesters and order

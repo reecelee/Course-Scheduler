@@ -1,0 +1,40 @@
+{
+    "courses": [
+      {
+        "course_number": "HHS 115",
+        "course_name": "Personal Nutrition",
+        "semesters_offered": ["Fall", "Winter"],
+        "credits": 3,
+        "prerequisites": []
+      },
+      {
+        "course_number": "HHS 135",
+        "course_name": "Health in Marriage and Family",
+        "semesters_offered": ["Fall", "Winter"],
+        "credits": 3,
+        "prerequisites": []
+      },
+      {
+        "course_number": "HHS 177",
+        "course_name": "Personal Health & Wellness",
+        "semesters_offered": ["Fall", "Winter", "Spring"],
+        "credits": 3,
+        "prerequisites": []
+      },
+      {
+        "course_number": "HHS 230",
+        "course_name": "Health Topics in Asia and Oceania",
+        "semesters_offered": ["Spring"],
+        "credits": 3,
+        "prerequisites": []
+      },
+      {
+        "course_number": "HHS 270",
+        "course_name": "Community Nutrition",
+        "semesters_offered": ["Fall", "Winter"],
+        "credits": 3,
+        "prerequisites": []
+      }
+    ]
+  }
+  

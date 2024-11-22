@@ -1,0 +1,33 @@
+{
+    "courses": [
+      {
+        "course_number": "SOCW 160",
+        "course_name": "Introduction to Social Welfare and Social Work",
+        "semesters_offered": ["Fall", "Winter", "Spring"],
+        "credits": 3,
+        "prerequisites": []
+      },
+      {
+        "course_number": "SOCW 357",
+        "course_name": "Human Behavior in the Social Environment",
+        "semesters_offered": ["Fall", "Winter", "Spring"],
+        "credits": 3,
+        "prerequisites": ["SOCW 160"]
+      },
+      {
+        "course_number": "SOCW 362",
+        "course_name": "Social Work Practice with Individuals",
+        "semesters_offered": ["Fall", "Winter", "Spring"],
+        "credits": 3,
+        "prerequisites": ["SOCW 160"]
+      },
+      {
+        "course_number": "SOCW 468",
+        "course_name": "Community Mental Health",
+        "semesters_offered": ["Fall", "Winter"],
+        "credits": 3,
+        "prerequisites": ["SOCW 160"]
+      }
+    ]
+  }
+  

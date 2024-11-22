@@ -1,0 +1,145 @@
+{
+    "courses": [
+        {
+            "course_number": "HIST 200",
+            "course_name": "The Historian’s Craft",
+            "semesters_offered": ["Fall"],
+            "credits": 3,
+            "prerequisites": []
+        },
+        {
+            "course_number": "HIST 201",
+            "course_name": "History of Civilization to 1500",
+            "semesters_offered": ["Fall", "Winter"],
+            "credits": 3,
+            "prerequisites": []
+        },
+        {
+            "course_number": "HIST 202",
+            "course_name": "History of Civilization since 1500",
+            "semesters_offered": ["Fall", "Winter", "Spring"],
+            "credits": 3,
+            "prerequisites": []
+        },
+        {
+            "course_number": "POSC 110",
+            "course_name": "The U.S. Political System",
+            "semesters_offered": ["Fall", "Winter"],
+            "credits": 3,
+            "prerequisites": []
+        },
+        {
+            "course_number": "HIST 485",
+            "course_name": "Junior Tutorial in History",
+            "semesters_offered": ["Winter"],
+            "credits": 3,
+            "prerequisites": ["HIST 200"]
+        },
+        {
+            "course_number": "HIST 490",
+            "course_name": "Historical Research and Writing",
+            "semesters_offered": ["Fall"],
+            "credits": 3,
+            "prerequisites": ["HIST 485"]
+        },
+        {
+            "course_number": "GEOG 101",
+            "course_name": "Introductory Geography",
+            "semesters_offered": ["Winter"],
+            "credits": 3,
+            "prerequisites": []
+        },
+        {
+            "course_number": "HIST 120",
+            "course_name": "American History to 1865 (The Americas)",
+            "semesters_offered": ["Fall"],
+            "credits": 3,
+            "prerequisites": []
+        },
+        {
+            "course_number": "HIST 121",
+            "course_name": "American History since 1865 (The Americas)",
+            "semesters_offered": ["Winter"],
+            "credits": 3,
+            "prerequisites": []
+        },
+        {
+            "course_number": "HIST 192",
+            "course_name": "Hawaiian Public and Local History",
+            "semesters_offered": ["Fall"],
+            "credits": 3,
+            "prerequisites": []
+        },
+        {
+            "course_number": "HIST 309",
+            "course_name": "Medieval Europe (Europe)",
+            "semesters_offered": ["Winter"],
+            "credits": 3,
+            "prerequisites": []
+        },
+        {
+            "course_number": "HIST 322",
+            "course_name": "History of the Early Modern Age (Europe)",
+            "semesters_offered": ["Spring"],
+            "credits": 3,
+            "prerequisites": []
+        },
+        {
+            "course_number": "HIST 333",
+            "course_name": "Critiquing History",
+            "semesters_offered": ["Winter"],
+            "credits": 3,
+            "prerequisites": []
+        },
+        {
+            "course_number": "HIST 344",
+            "course_name": "Modern China (Asia)",
+            "semesters_offered": ["Fall"],
+            "credits": 3,
+            "prerequisites": []
+        },
+        {
+            "course_number": "HIST 362",
+            "course_name": "History of the Pacific (Pacific Islands)",
+            "semesters_offered": ["Spring"],
+            "credits": 3,
+            "prerequisites": []
+        },
+        {
+            "course_number": "HIST 365",
+            "course_name": "Hawaiian History I - Pre-Western Contact to Kamehameha V (Pacific Islands)",
+            "semesters_offered": ["Fall"],
+            "credits": 3,
+            "prerequisites": []
+        },
+        {
+            "course_number": "HIST 366",
+            "course_name": "Hawaiian History II - Elected Monarchs, Overthrow, Restoration (Pacific Islands)",
+            "semesters_offered": ["Winter"],
+            "credits": 3,
+            "prerequisites": []
+        },
+        {
+            "course_number": "HIST 367",
+            "course_name": "Cultural History of Surfing (Pacific Islands)",
+            "semesters_offered": ["Spring"],
+            "credits": 3,
+            "prerequisites": []
+        },
+        {
+            "course_number": "HIST 390R",
+            "course_name": "Special Topics in History",
+            "semesters_offered": ["Fall", "Winter", "Spring"],
+            "credits": 3,
+            "prerequisites": []
+        },
+        {
+            "course_number": "HIST 423",
+            "course_name": "Modern Nationalism and Globalization",
+            "semesters_offered": ["Winter"],
+            "credits": 3,
+            "prerequisites": []
+        }
+    ]
+}
+  

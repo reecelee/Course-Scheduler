@@ -1,0 +1,46 @@
+{
+    "courses": [
+        {
+            "course_number": "ENG 101",
+            "course_name": "College Writing",
+            "semesters_offered": ["Fall", "Winter", "Spring"],
+            "credits": 3,
+            "prerequisites": []
+        },
+        {
+            "course_number": "REL 200",
+            "course_name": "The Eternal Family",
+            "semesters_offered": ["Fall", "Winter", "Spring"],
+            "credits": 2,
+            "prerequisites": []
+        },
+        {
+            "course_number": "REL 225",
+            "course_name": "Foundations of the Restoration",
+            "semesters_offered": ["Fall", "Winter", "Spring"],
+            "credits": 2,
+            "prerequisites": []
+        },
+        {
+            "course_number": "REL 250",
+            "course_name": "Jesus Christ and the Everlasting Gospel",
+            "semesters_offered": ["Fall", "Winter", "Spring"],
+            "credits": 2,
+            "prerequisites": []
+        },
+        {
+            "course_number": "REL 275",
+            "course_name": "The Teachings and Doctrine of the Book of Mormon",
+            "semesters_offered": ["Fall", "Winter", "Spring"],
+            "credits": 2,
+            "prerequisites": []
+        },
+        {
+            "course_number": "ENG 315",
+            "course_name": "Advanced College Writing",
+            "semesters_offered": ["Fall", "Winter", "Spring"],
+            "credits": 3,
+            "prerequisites": ["ENG 101"]
+        }
+    ] 
+}

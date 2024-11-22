@@ -1,0 +1,39 @@
+{
+  "courses": [
+    {
+      "course_number": "PSYC 111",
+      "course_name": "General Psychology",
+      "semesters_offered": ["Fall", "Winter", "Spring"],
+      "credits": 3,
+      "prerequisites": []
+    },
+    {
+      "course_number": "PSYC 210",
+      "course_name": "Developmental Psychology",
+      "semesters_offered": ["Fall", "Winter"],
+      "credits": 3,
+      "prerequisites": ["PSYC 111"]
+    },
+    {
+      "course_number": "PSYC 340",
+      "course_name": "Community Mental Health",
+      "semesters_offered": ["Fall", "Spring"],
+      "credits": 3,
+      "prerequisites": ["PSYC 111"]
+    },
+    {
+      "course_number": "PSYC 341",
+      "course_name": "Personality",
+      "semesters_offered": ["Winter"],
+      "credits": 3,
+      "prerequisites": ["PSYC 111"]
+    },
+    {
+      "course_number": "PSYC 350",
+      "course_name": "Social Psychology",
+      "semesters_offered": ["Fall", "Winter", "Spring"],
+      "credits": 3,
+      "prerequisites": ["PSYC 111"]
+    }
+  ]
+}

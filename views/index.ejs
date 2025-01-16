@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Holokai Planner</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="public/style.css" />
   </head>
   <body>
     <!-- New Header Section -->
@@ -12,8 +12,8 @@
       <div class="top-header-content">
         <h2 class="site-logo">My University Planner</h2>
         <nav class="top-nav">
-          <a href="single.html" class="nav-link ">Single Scheduler</a>
-          <a href="index.html" class="nav-link active">Full Schedule</a>
+          <a href="single.html" class="nav-link">Single Scheduler</a>
+          <a href="index.ejs" class="nav-link active">Full Schedule</a>
         </nav>
       </div>
     </header>
@@ -22,7 +22,11 @@
     <div class="background-image">
       <!-- Start of the image container -->
       <div class="header-image-container">
-        <img src="assets/Single.png" alt="University Campus" class="header-image" />
+        <img
+          src="assets/Single.png"
+          alt="University Campus"
+          class="header-image"
+        />
       </div>
       <!-- End of the image container -->
 
@@ -106,23 +110,19 @@
           <div class="input-group">
             <label for="minor1">Minor 1:</label>
             <select id="minor1">
-
               <option value="minors/ANTH.json">Anthropology</option>
               <option value="minors/ASTU.json">Asian Studies</option>
               <option value="minors/BIOC.json">Biochemistry</option>
               <option value="minors/BIOLm.json">Biology</option>
-              
-              
-             
+
               <option value="minors/CHEM.json">Chemistry</option>
               <option value="minors/CHIN.json">Chinese</option>
               <option value="minors/COMM.json">Communications</option>
-              
-              
+
               <option value="minors/CWRT.json">Creative Writing</option>
-              
+
               <option value="minors/ECON.json">Economics</option>
-              
+
               <option value="minors/ENGL.json">English</option>
               <option value="minors/ENTR.json">Entrepreneurship</option>
               <option value="minors/FILM.json">Film</option>
@@ -138,14 +138,13 @@
                 Health and Human Performance
               </option>
               <option value="minors/HIST.json">History</option>
-              
-              
+
               <option value="minors/ITm.json">Information Technology</option>
               <option value="minors/IHUM.json">Integrated Humanities</option>
               <option value="minors/INTD.json">
                 International Development
               </option>
-              
+
               <option value="minors/LING.json">Intro to Linguistics</option>
               <option value="minors/ICHEM.json">
                 Introduction to Chemistry
@@ -153,15 +152,13 @@
               <option value="minors/ICBIOL.json">
                 Introduction to Conservation Biology
               </option>
-              
+
               <option value="minors/IMBIOL.json">
                 Introduction to Marine Biology
               </option>
-              
-              
-              
+
               <option value="minors/JPN.json">Japanese</option>
-              
+
               <option value="minors/INTROLING.json">Linguistics</option>
               <option value="minors/MARK.json">Marketing</option>
               <option value="minors/MATHm.json">Mathematics</option>
@@ -191,23 +188,19 @@
           <div class="input-group">
             <label for="minor2">Minor 2:</label>
             <select id="minor2">
-
               <option value="minors/ANTH.json">Anthropology</option>
               <option value="minors/ASTU.json">Asian Studies</option>
               <option value="minors/BIOC.json">Biochemistry</option>
               <option value="minors/BIOLm.json">Biology</option>
-              
-              
-             
+
               <option value="minors/CHEM.json">Chemistry</option>
               <option value="minors/CHIN.json">Chinese</option>
               <option value="minors/COMM.json">Communications</option>
-              
-              
+
               <option value="minors/CWRT.json">Creative Writing</option>
-              
+
               <option value="minors/ECON.json">Economics</option>
-              
+
               <option value="minors/ENGL.json">English</option>
               <option value="minors/ENTR.json">Entrepreneurship</option>
               <option value="minors/FILM.json">Film</option>
@@ -223,14 +216,13 @@
                 Health and Human Performance
               </option>
               <option value="minors/HIST.json">History</option>
-              
-              
+
               <option value="minors/ITm.json">Information Technology</option>
               <option value="minors/IHUM.json">Integrated Humanities</option>
               <option value="minors/INTD.json">
                 International Development
               </option>
-              
+
               <option value="minors/LING.json">Intro to Linguistics</option>
               <option value="minors/ICHEM.json">
                 Introduction to Chemistry
@@ -238,10 +230,12 @@
               <option value="minors/ICBIOL.json">
                 Introduction to Conservation Biology
               </option>
-              
-              <option value="minors/IMBIOL.json">Introduction to Marine Biology</option>
+
+              <option value="minors/IMBIOL.json">
+                Introduction to Marine Biology
+              </option>
               <option value="minors/JPN.json">Japanese</option>
-              
+
               <option value="minors/INTROLING.json">Linguistics</option>
               <option value="minors/MARK.json">Marketing</option>
               <option value="minors/MATHm.json">Mathematics</option>
@@ -325,10 +319,13 @@
             <p><span class="legend-color type-major"></span> Major Classes</p>
             <p><span class="legend-color type-minor"></span> Minor Classes</p>
             <p><span class="legend-color type-core"></span> Core Classes</p>
-            <p><span class="legend-color type-eil"></span> EIL/Holokai Classes</p>
-            <p><span class="legend-color type-religion"></span> Religion Classes</p>
+            <p>
+              <span class="legend-color type-eil"></span> EIL/Holokai Classes
+            </p>
+            <p>
+              <span class="legend-color type-religion"></span> Religion Classes
+            </p>
           </div>
-        
 
           <!-- Generate Schedule button -->
           <button id="calculate-schedule">Generate Schedule</button>

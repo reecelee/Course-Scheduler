@@ -2,18 +2,29 @@ require('dotenv').config(); // Load environment variables from .env
 
 const mongoose = require('mongoose'); // Import mongoose
 const express = require('express');
+const expressLayouts = require('express-ejs-layouts');
 const path = require('path');
 const db = require('./db'); // Import db.js models (e.g., Course, Major, Minor1, Minor2)
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.json());
+app.use(expressLayouts);
 
 // Serve static files from the project root directory
 app.use(express.static(path.join(__dirname)));
 
+app.get('/', (req, res) => {
+    res.render('index', {
+      title: 'Home Page'
+      // layout: 'someOtherLayout.ejs' // Only if you have a custom layout name
+    });
+  });
+  
 /**
  * @route   GET /api/courses
  * @desc    Fetch all courses or filter based on query parameters

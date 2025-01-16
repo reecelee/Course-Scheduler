@@ -6,79 +6,60 @@
     <title>Holokai Planner</title>
     <link rel="stylesheet" href="public/style.css" />
   </head>
+  <header class="top-header">
+    <div class="top-header-content">
+      <h2 class="site-logo">My University Planner</h2>
+      <nav class="top-nav">
+        <a href="/single" class="nav-link active">Single Scheduler</a>
+        <a href="/" class="nav-link">Full Schedule</a>
+      </nav>
+    </div>
+  </header>
   <body>
-    <!-- New Header Section -->
-    <header class="top-header">
-      <div class="top-header-content">
-        <h2 class="site-logo">My University Planner</h2>
-        <nav class="top-nav">
-          <a href="/single" class="nav-link">Single Scheduler</a>
-          <a href="/" class="nav-link active">Full Schedule</a>
-        </nav>
-      </div>
-    </header>
-    <!-- End of New Header Section -->
-
     <div class="background-image">
-      <!-- Start of the image container -->
       <div class="header-image-container">
         <img
-          src="assets/Single.png"
+          src="assets/Holokai.jpg"
           alt="University Campus"
           class="header-image"
         />
       </div>
-      <!-- End of the image container -->
 
-      <!-- Start of the container -->
       <div class="container">
         <header class="floating-bar">
-          <!-- First Row -->
-          <!-- Majors -->
+          <!-- Single Program Selection -->
           <div class="input-group">
-            <label for="major">Major:</label>
-            <select id="major">
-              <%- include('partials/majors.ejs') %>
+            <label for="program-select">Program:</label>
+            <select id="program-select">
+              <%- include('partials/majors.ejs') %> <%-
+              include('partials/minors.ejs') %>
             </select>
           </div>
 
-          <!-- Minor 1 -->
-
+          <!-- Single Checkbox to include Holokai, Core, Religion, and EIL -->
           <div class="input-group">
-            <label for="minor1">Minor 1:</label>
-            <select id="minor1">
-              <%- include('partials/minors.ejs') %>
-            </select>
+            <label
+              ><input type="checkbox" id="include-all-extras" /> Include
+              Holokai, Core, Religion, and EIL</label
+            >
           </div>
 
-          <!-- Minor 2 -->
-
+          <!-- EIL Level Dropdown, disabled by default -->
           <div class="input-group">
-            <label for="minor2">Minor 2:</label>
-            <select id="minor2">
-              <%- include('partials/minors.ejs') %>
-            </select>
-          </div>
-
-          <div class="input-group">
-            <label for="english-level">English Level:</label>
-            <select id="english-level">
+            <label for="eil-level">EIL Level:</label>
+            <select id="eil-level" disabled>
               <option value="fluent">Fluent</option>
               <option value="academic-english-2">Academic English 2</option>
               <option value="academic-english-1">Academic English 1</option>
             </select>
           </div>
 
-          <!-- Second Row -->
           <div class="input-group">
             <label for="start-semester">Starting Semester:</label>
             <select id="start-semester">
               <option value="Fall 2024">Fall 2024</option>
               <option value="Winter 2025">Winter 2025</option>
               <option value="Spring 2025">Spring 2025</option>
-              <option value="Fall 2025">Fall 2025</option>
-              <option value="Winter 2026">Winter 2026</option>
-              <option value="Spring 2026">Spring 2026</option>
             </select>
           </div>
 
@@ -95,11 +76,7 @@
             <label for="fall-winter-credits">Fall/Winter Credits:</label>
             <select id="fall-winter-credits">
               <option value="12">12</option>
-              <option value="13">13</option>
-              <option value="14">14</option>
-              <option value="15">15</option>
               <option value="16" selected>16</option>
-              <option value="17">17</option>
               <option value="18">18</option>
             </select>
           </div>
@@ -108,9 +85,7 @@
             <label for="spring-credits">Spring Credits:</label>
             <select id="spring-credits">
               <option value="8">8</option>
-              <option value="9">9</option>
               <option value="10" selected>10</option>
-              <option value="11">11</option>
               <option value="12">12</option>
             </select>
           </div>
@@ -127,37 +102,30 @@
             </p>
           </div>
 
-          <!-- Generate Schedule button -->
-          <button id="calculate-schedule">Generate Schedule</button>
+          <button id="calculate-single-schedule">Generate Schedule</button>
         </header>
 
-        <!-- Schedule Container (Initially Hidden) -->
         <div id="schedule-container" class="hidden">
-          <!-- Summary Information -->
           <div id="summary" class="summary-box">
-            <div class="summary-item animated-box" id="total-credits-box">
+            <div class="summary-item animated-box">
               <p>Total Credits Taken</p>
               <h2 id="total-credits">0</h2>
             </div>
-            <div class="summary-item animated-box" id="graduation-date-box">
+            <div class="summary-item animated-box">
               <p>Graduation Date</p>
               <h2 id="graduation-date">TBD</h2>
             </div>
-            <div class="summary-item animated-box" id="electives-needed-box">
+            <div class="summary-item animated-box">
               <p>Elective Credits Needed</p>
               <h2 id="electives-needed">0</h2>
             </div>
           </div>
 
-          <!-- Schedule Grid -->
-          <div id="schedule">
-            <!-- Semester boxes populated by JavaScript -->
-          </div>
+          <div id="schedule"></div>
         </div>
       </div>
-      <!-- End of the container -->
     </div>
 
-    <script src="script.js"></script>
+    <script src="single-script.js"></script>
   </body>
 </html>

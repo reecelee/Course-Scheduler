@@ -18,9 +18,18 @@ app.use(expressLayouts);
 // Serve static files from the project root directory
 app.use(express.static(path.join(__dirname)));
 
+//Full Scheduler (Home Page)
 app.get('/', (req, res) => {
     res.render('index', {
       title: 'Home Page'
+      // layout: 'someOtherLayout.ejs' // Only if you have a custom layout name
+    });
+  });
+
+  //Single Scheduler
+  app.get('/single', (req, res) => {
+    res.render('single', {
+      title: 'Single Scheduler'
       // layout: 'someOtherLayout.ejs' // Only if you have a custom layout name
     });
   });

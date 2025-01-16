@@ -21,7 +21,7 @@
         "course_name": "Advanced Writing Requirement",
         "semesters_offered": ["Fall", "Winter", "Spring"],
         "credits": 3,
-        "prerequisites": []
+        "prerequisites": ["ENGL 101"]
       }
     ]
 }

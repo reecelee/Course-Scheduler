@@ -54,54 +54,7 @@
             </select>
           </div>
 
-          <div class="input-group">
-            <label for="start-semester">Starting Semester:</label>
-            <select id="start-semester">
-              <option value="Fall 2024">Fall 2024</option>
-              <option value="Winter 2025">Winter 2025</option>
-              <option value="Spring 2025">Spring 2025</option>
-            </select>
-          </div>
-
-          <div class="input-group">
-            <label for="major-class-limit">Max Major Classes:</label>
-            <select id="major-class-limit">
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4" selected>4</option>
-            </select>
-          </div>
-
-          <div class="input-group">
-            <label for="fall-winter-credits">Fall/Winter Credits:</label>
-            <select id="fall-winter-credits">
-              <option value="12">12</option>
-              <option value="16" selected>16</option>
-              <option value="18">18</option>
-            </select>
-          </div>
-
-          <div class="input-group">
-            <label for="spring-credits">Spring Credits:</label>
-            <select id="spring-credits">
-              <option value="8">8</option>
-              <option value="10" selected>10</option>
-              <option value="12">12</option>
-            </select>
-          </div>
-
-          <div class="legend">
-            <p><span class="legend-color type-major"></span> Major Classes</p>
-            <p><span class="legend-color type-minor"></span> Minor Classes</p>
-            <p><span class="legend-color type-core"></span> Core Classes</p>
-            <p>
-              <span class="legend-color type-eil"></span> EIL/Holokai Classes
-            </p>
-            <p>
-              <span class="legend-color type-religion"></span> Religion Classes
-            </p>
-          </div>
-
+          <%- include('partials/header.ejs') %>
           <button id="calculate-single-schedule">Generate Schedule</button>
         </header>
 

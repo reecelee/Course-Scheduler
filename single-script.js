@@ -295,11 +295,9 @@ document.getElementById("calculate-single-schedule").addEventListener("click", a
         if (schedule.length > 0) {
             graduationDate = schedule[schedule.length - 1].name.match(/\(([^)]+)\)/)[1];
         }
-        let electiveCreditsNeeded = Math.max(0, 120 - totalCredits);
 
         document.getElementById('total-credits').innerText = totalCredits;
         document.getElementById('graduation-date').innerText = graduationDate;
-        document.getElementById('electives-needed').innerText = electiveCreditsNeeded;
 
         document.getElementById('schedule-container').classList.remove('hidden');
 

@@ -430,20 +430,25 @@ button:hover {
 }
 
 .type-holokai, .type-eil {
-    background-color: plum; /* purple */
+    background-color: #aeb7e9
+    ; /* lilac */
     
 }
 .type-major {
-    background-color: lightcoral; /* red-ish */
+    background-color: #aed5e9
+    ; /* soft blue */
 }
 .type-minor {
-    background-color: rgb(251, 251, 150); /* yellow-ish */
+    background-color: #e9aeb7
+    ; /* salmon */
 }
 .type-core {
-    background-color: lightgray; /* grey */
+    background-color: #c2aee9
+    ; /* purple */
 }
 .type-religion {
-    background-color: lightgreen; /* green */
+    background-color: #e9aed5
+    ; /* pink */
 }
 
 /* Updated Legend Styles */

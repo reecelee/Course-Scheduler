@@ -369,6 +369,9 @@ document.getElementById("calculate-schedule").addEventListener("click", async ()
                 </ul>
             </div>
         `).join('');
+        const scheduleText = generateTextReport(schedule);
+        console.log(scheduleText);
+        document.getElementById('report-output').textContent = scheduleText;
 
     } catch (error) {
         console.error("Error during scheduling process:", error);
@@ -378,7 +381,48 @@ document.getElementById("calculate-schedule").addEventListener("click", async ()
 
         document.getElementById("schedule").innerHTML = "<p>An error occurred while generating the schedule. Check the console for details.</p>";
     }
+    
 });
+
+function generateTextReport(schedule) {
+    let output = `SCHEDULE REPORT\n\n`;
+  
+    // Summaries
+    const totalCredits = schedule.reduce((sum, sem) => sum + sem.credits, 0);
+    output += `Total Semesters: ${schedule.length}\n`;
+    output += `Total Credits: ${totalCredits}\n\n`;
+  
+    // Semester-by-semester breakdown
+    for (const sem of schedule) {
+      output += `${sem.name} - Credits: ${sem.credits}\n`;
+      output += `Courses:\n`;
+      for (let i = 0; i < sem.courses.length; i++) {
+        output += `   ${i + 1}. ${sem.courses[i]}\n`;
+      }
+      output += `\n`; // extra spacing between semesters
+    }
+  
+    return output;
+  }
+
+  function downloadFile(filename, text) {
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+  
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
+  
+  document.getElementById('save-report').addEventListener('click', () => {
+    const reportString = generateTextReport(schedule);
+    downloadFile('schedule-report.txt', reportString);
+  });
+  
 
 // **Helper function to get the type class for CSS**
 function getTypeClass(course) {

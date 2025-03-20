@@ -1,11 +1,11 @@
-// Global variable to hold all courses for later filtering (e.g. religion courses)
-let allCourses = [];
-// Global lookup map for classes by their ID (populated from /api/classes)
-let allClassesMap = {};
+// Global variables to store only necessary data
+let allClassesMap = {}; // Will be populated on-demand
+let basicCourses = []; // Lightweight course data for dropdowns
 
 document.addEventListener('DOMContentLoaded', async () => {
+  // --- Fetch All Classes and Build Lookup Map ---
   try {
-    // --- Fetch All Classes and Build Lookup Map ---
+    // First, fetch all classes from the API and build the lookup map.
     const classesResponse = await fetch('/api/classes');
     if (!classesResponse.ok) {
       throw new Error(`Error fetching all classes: ${classesResponse.statusText}`);
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
     console.log("Built allClassesMap with", Object.keys(allClassesMap).length, "classes.");
 
-    // --- Fetch Courses and Populate English Level Dropdown ---
+    // Then, fetch courses and populate English Level dropdown.
     const response = await fetch('/api/courses');
     if (!response.ok) {
       throw new Error(`Error fetching courses: ${response.statusText}`);
@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       englishLevelSelect.innerHTML = "";
       englishCourses.forEach(course => {
         const option = document.createElement("option");
-        // For English, we use the course name directly (e.g., "EIL Level 1")
         option.value = course.course_name;
         option.textContent = course.course_name;
         englishLevelSelect.appendChild(option);
@@ -50,10 +49,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // --- Setup Search for Major, Minor1, Minor2 ---
+  // For Major search, we filter by course_type "major"
   setupCourseSearch("majorSearchInput", "majorSearchResults", "selectedMajor", "major");
+  // For Minor search, we filter by course_type "minor"
   setupCourseSearch("minor1SearchInput", "minor1SearchResults", "selectedMinor1", "minor");
   setupCourseSearch("minor2SearchInput", "minor2SearchResults", "selectedMinor2", "minor");
 
+  // Helper function to set up search input for a given category.
   function setupCourseSearch(inputId, resultsId, hiddenInputId, courseType) {
     const searchInput = document.getElementById(inputId);
     const searchResults = document.getElementById(resultsId);
@@ -74,12 +76,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (!searchResults) return;
       searchResults.innerHTML = "";
       
+      // Hide results container if query is empty
       if (query === "") {
         searchResults.style.display = "none";
         return;
       }
       
       try {
+        // Append courseType if provided.
         let url = `/api/courses/search?query=${encodeURIComponent(query)}&limit=5`;
         if (courseType) {
           url += `&course_type=${encodeURIComponent(courseType)}`;
@@ -91,6 +95,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const data = await res.json();
         const coursesFound = data.courses || [];
         
+        // Show results container if we have results
         if (coursesFound.length > 0) {
           searchResults.style.display = "block";
         } else {
@@ -101,8 +106,11 @@ document.addEventListener('DOMContentLoaded', async () => {
           const li = document.createElement("li");
           li.textContent = `${course.course_type}: ${course.course_name}`;
           li.addEventListener('click', () => {
+            // On selection, update the hidden input with the course ID
             hiddenInput.value = course.id;
+            // Also update the search input to show the selected course
             searchInput.value = course.course_name;
+            // Clear results list and hide container
             searchResults.innerHTML = "";
             searchResults.style.display = "none";
           });
@@ -114,7 +122,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // --- Helper Functions for Scheduling ---
+  // --- Helper Functions for Scheduling (unchanged) ---
   function isReligionClass(cls) {
     if (cls.course_type) {
       return cls.course_type.toLowerCase() === "religion";
@@ -136,27 +144,36 @@ document.addEventListener('DOMContentLoaded', async () => {
           allClassesArr = allClassesArr.concat(classesWithSection);
         }
       });
-      classes = allClassesArr;
-    }
-    classes = classes.map(cls => ({ ...cls, category: category }));
-    if (programDetails.course_type) {
-      classes = classes.map(cls => ({ ...cls, course_type: programDetails.course_type }));
-    }
-    if (isMajor) {
-      classes = classes.map(cls => ({ ...cls, isMajor: true }));
-    }
-    return classes;
+      
+      // Identify prerequisites
+      requiredClasses.forEach(cls => {
+        if (cls.prerequisites && cls.prerequisites.length > 0) {
+          cls.prerequisites.forEach(prereqId => {
+            const id = typeof prereqId === 'object' ? (prereqId.id || prereqId.class_id) : prereqId;
+            if (id) prerequisiteIds.add(id);
+          });
+        }
+      });
+    });
+    
+    return {
+      requiredClasses: allRequiredClasses,
+      electiveSections: allElectiveSections,
+      prerequisiteIds: Array.from(prerequisiteIds)
+    };
+  }
+  
+  function getCategory(courseType) {
+    if (!courseType) return '';
+    const type = courseType.toLowerCase();
+    if (type === "major") return "major";
+    if (type === "minor") return "minor";
+    if (type === "religion") return "religion";
+    if (type === "eil/holokai") return "english";
+    return type;
   }
 
-  function getPriority(cls) {
-    if (cls.category === "english") return 1;
-    if (cls.category === "major") return 3;
-    if (cls.category === "minor") return 4;
-    return 10;
-  }
-
-  // --- Updated Allowed Electives Function ---
-  // Now uses "credits_needed_to_take" instead of "classes_to_choose" and sums candidate credits.
+  // Updated Allowed Electives using credits_needed_to_take
   function getAllowedElectives(allCourses, selectedCourseIds) {
     let allowedElectives = [];
     allCourses.forEach(course => {
@@ -176,6 +193,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const numB = parseInt(b.class_number.match(/\d+/)?.[0] || "0", 10);
                 return numA - numB;
               });
+              // Use credits_needed_to_take instead of classes_to_choose
               let allowedCredits = section.credits_needed_to_take || 0;
               let accumulatedCredits = 0;
               for (let i = 0; i < candidates.length; i++) {
@@ -195,10 +213,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     return allowedElectives;
   }
 
+  // Add this helper function for computing class dependencies
   function computeDepthMap(classes) {
-    let classMap = {};
+    // Create a map of classes by ID for quick lookups
+    const classesById = {};
     classes.forEach(cls => {
-      classMap[cls.id] = cls;
+      classesById[cls.id] = cls;
     });
     let memo = {};
     function getDepth(cls) {
@@ -217,13 +237,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   let depthFunction; // will be computed later
 
-  // --- Updated Priority Function ---
-  // Priority order:
-  // 1. English (EIL/Holokai)
-  // 2. Major
-  // 3. Religion
-  // 4. Minor
-  // Senior classes get a very high base value so they’re normally scheduled last.
+  // Updated Priority Function (Order: English, Major, Religion, Minor; Senior classes get very low priority)
   function computePriority(cls) {
     let basePriority;
     if (cls.is_senior_class === true) {
@@ -322,7 +336,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const allowedElectives = getAllowedElectives(allCourses, selectedCourseIds);
       console.log("Allowed elective classes count:", allowedElectives.length);
 
-      // Build required classes:
+      // Build required classes.
       // For English, extract classes from the selected English course.
       const selectedEnglishCourse = allCourses.find(course =>
         course.course_name === englishLevel
@@ -337,26 +351,21 @@ document.addEventListener('DOMContentLoaded', async () => {
       const englishDetails = await englishRes.json();
       const englishClasses = extractClasses(englishDetails, false, "english");
 
-      // For Major and Minor courses, only include those whose IDs are in selectedCourseIds.
+      // For Religion, Major, and Minor, use all courses from allCourses that are of these types.
       let requiredClasses = [];
       allCourses.forEach(course => {
-        if (course.course_type) {
-          const lowerType = course.course_type.toLowerCase();
-          if (lowerType === "major" || lowerType === "minor") {
-            if (selectedCourseIds.includes(course.id)) {
-              const isMajor = lowerType === "major";
-              const category = isMajor ? "major" : "minor";
-              const courseClasses = extractClasses(course, isMajor, category);
-              requiredClasses = requiredClasses.concat(courseClasses);
-            }
-          } else if (lowerType === "religion") {
-            // Religion courses are global.
-            const courseClasses = extractClasses(course, false, "religion");
-            requiredClasses = requiredClasses.concat(courseClasses);
-          }
+        if (
+          course.course_type &&
+          (course.course_type.toLowerCase() === "major" ||
+           course.course_type.toLowerCase() === "minor" ||
+           course.course_type.toLowerCase() === "religion")
+        ) {
+          const isMajor = course.course_type.toLowerCase() === "major";
+          const category = isMajor ? "major" : (course.course_type.toLowerCase() === "minor" ? "minor" : "religion");
+          const courseClasses = extractClasses(course, isMajor, category);
+          requiredClasses = requiredClasses.concat(courseClasses);
         }
       });
-
       // Combine English classes with required classes, filtering out electives.
       requiredClasses = englishClasses.concat(requiredClasses).filter(cls => !cls.is_elective);
       // Also filter out any classes that do not clearly belong to one of our four categories.
@@ -421,7 +430,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       function computePriority(cls) {
         let basePriority;
         if (cls.is_senior_class === true) {
-          basePriority = 100; // Senior classes get lowest priority.
+          basePriority = 100;
         } else if (cls.category === "english") {
           basePriority = 1;
         } else if (cls.category === "major") {

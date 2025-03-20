@@ -1,14 +1,19 @@
 {
     "sqltools.connections": [
         {
+            "pgOptions": {
+                "ssl": {
+                    "rejectUnauthorized": true
+                }
+            },
             "previewLimit": 50,
-            "server": "localhost",
+            "server": "dpg-cvcvd5qj1k6c73dkms3g-a.oregon-postgres.render.com",
             "port": 5432,
-            "askForPassword": true,
             "driver": "PostgreSQL",
-            "name": "postgres",
-            "username": "postgres",
-            "database": "postgres"
+            "name": "test server",
+            "username": "holokaitestserver_user",
+            "database": "holokaitestserver",
+            "password": "09ArdXT9EX11AOYOauFo0Od5Gch27bMc"
         }
     ]
 }

@@ -30,7 +30,7 @@
         alt="BYUH Logo"
       />
       <!-- Admin login positioned right -->
-      <a href="./search.html" class="admin-link">Admin Login</a>
+      
     </div>
 
     <div class="menu-spacer"></div>
@@ -46,43 +46,36 @@
       <!-- Start of the container -->
       <div class="container">
         <header class="floating-bar">
-          <!-- New Program Search Input Group replaces Major/Minor dropdowns -->
+          <!-- Replace the major search input with a dropdown -->
           <div class="input-group" id="major-search-group">
-            <label for="majorSearchInput">Major:</label>
-            <input
-              type="text"
-              id="majorSearchInput"
-              placeholder="Select a Major"
-              autocomplete="off"
-            />
-            <ul id="majorSearchResults"></ul>
-            <!-- Hidden input to store the selected major ID -->
+            <label for="majorSelect">Major:</label>
+            <select id="majorSelect">
+              <option value="">Select a Major</option>
+              <!-- Options will be populated by JavaScript -->
+            </select>
+            <!-- Keep the hidden input for ID storage -->
             <input type="hidden" id="selectedMajor" />
           </div>
 
+          <!-- Replace the minor1 search input with a dropdown -->
           <div class="input-group" id="minor1-search-group">
-            <label for="minor1SearchInput">Minor 1:</label>
-            <input
-              type="text"
-              id="minor1SearchInput"
-              placeholder="Select Your First Minor "
-              autocomplete="off"
-            />
-            <ul id="minor1SearchResults"></ul>
-            <!-- Hidden input to store the selected minor 1 ID -->
+            <label for="minor1Select">Minor 1:</label>
+            <select id="minor1Select">
+              <option value="">Select Your First Minor</option>
+              <!-- Options will be populated by JavaScript -->
+            </select>
+            <!-- Keep the hidden input for ID storage -->
             <input type="hidden" id="selectedMinor1" />
           </div>
 
+          <!-- Replace the minor2 search input with a dropdown -->
           <div class="input-group" id="minor2-search-group">
-            <label for="minor2SearchInput">Minor 2:</label>
-            <input
-              type="text"
-              id="minor2SearchInput"
-              placeholder="Select Your Second Minor"
-              autocomplete="off"
-            />
-            <ul id="minor2SearchResults"></ul>
-            <!-- Hidden input to store the selected minor 2 ID -->
+            <label for="minor2Select">Minor 2:</label>
+            <select id="minor2Select">
+              <option value="">Select Your Second Minor</option>
+              <!-- Options will be populated by JavaScript -->
+            </select>
+            <!-- Keep the hidden input for ID storage -->
             <input type="hidden" id="selectedMinor2" />
           </div>
 

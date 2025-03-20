@@ -1,5 +1,10 @@
+const { Pool } = require('pg'); // Add the missing import
+
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false // Required for Render databases
+    }
 });
 
 // Handle connection errors gracefully

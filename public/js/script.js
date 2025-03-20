@@ -4,9 +4,8 @@ let allCourses = [];
 let allClassesMap = {};
 
 document.addEventListener('DOMContentLoaded', async () => {
-  // --- Fetch All Classes and Build Lookup Map ---
   try {
-    // First, fetch all classes from the API and build the lookup map.
+    // --- Fetch All Classes and Build Lookup Map ---
     const classesResponse = await fetch('/api/classes');
     if (!classesResponse.ok) {
       throw new Error(`Error fetching all classes: ${classesResponse.statusText}`);
@@ -19,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
     console.log("Built allClassesMap with", Object.keys(allClassesMap).length, "classes.");
 
-    // Then, fetch courses and populate English Level dropdown.
+    // --- Fetch Courses and Populate English Level Dropdown ---
     const response = await fetch('/api/courses');
     if (!response.ok) {
       throw new Error(`Error fetching courses: ${response.statusText}`);
@@ -51,13 +50,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // --- Setup Search for Major, Minor1, Minor2 ---
-  // For Major search, we filter by course_type "major"
   setupCourseSearch("majorSearchInput", "majorSearchResults", "selectedMajor", "major");
-  // For Minor search, we filter by course_type "minor"
   setupCourseSearch("minor1SearchInput", "minor1SearchResults", "selectedMinor1", "minor");
   setupCourseSearch("minor2SearchInput", "minor2SearchResults", "selectedMinor2", "minor");
 
-  // Helper function to set up search input for a given category.
   function setupCourseSearch(inputId, resultsId, hiddenInputId, courseType) {
     const searchInput = document.getElementById(inputId);
     const searchResults = document.getElementById(resultsId);
@@ -78,14 +74,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (!searchResults) return;
       searchResults.innerHTML = "";
       
-      // Hide results container if query is empty
       if (query === "") {
         searchResults.style.display = "none";
         return;
       }
       
       try {
-        // Append courseType if provided.
         let url = `/api/courses/search?query=${encodeURIComponent(query)}&limit=5`;
         if (courseType) {
           url += `&course_type=${encodeURIComponent(courseType)}`;
@@ -97,7 +91,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const data = await res.json();
         const coursesFound = data.courses || [];
         
-        // Show results container if we have results
         if (coursesFound.length > 0) {
           searchResults.style.display = "block";
         } else {
@@ -108,11 +101,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           const li = document.createElement("li");
           li.textContent = `${course.course_type}: ${course.course_name}`;
           li.addEventListener('click', () => {
-            // On selection, update the hidden input with the course ID
             hiddenInput.value = course.id;
-            // Also update the search input to show the selected course
             searchInput.value = course.course_name;
-            // Clear results list and hide container
             searchResults.innerHTML = "";
             searchResults.style.display = "none";
           });
@@ -124,7 +114,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // --- Helper Functions for Scheduling (unchanged) ---
+  // --- Helper Functions for Scheduling ---
   function isReligionClass(cls) {
     if (cls.course_type) {
       return cls.course_type.toLowerCase() === "religion";
@@ -165,7 +155,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     return 10;
   }
 
-  // Updated Allowed Electives using credits_needed_to_take
+  // --- Updated Allowed Electives Function ---
+  // Now uses "credits_needed_to_take" instead of "classes_to_choose" and sums candidate credits.
   function getAllowedElectives(allCourses, selectedCourseIds) {
     let allowedElectives = [];
     allCourses.forEach(course => {
@@ -185,7 +176,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const numB = parseInt(b.class_number.match(/\d+/)?.[0] || "0", 10);
                 return numA - numB;
               });
-              // Use credits_needed_to_take instead of classes_to_choose
               let allowedCredits = section.credits_needed_to_take || 0;
               let accumulatedCredits = 0;
               for (let i = 0; i < candidates.length; i++) {
@@ -227,7 +217,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   let depthFunction; // will be computed later
 
-  // Updated Priority Function (Order: English, Major, Religion, Minor; Senior classes get very low priority)
+  // --- Updated Priority Function ---
+  // Priority order:
+  // 1. English (EIL/Holokai)
+  // 2. Major
+  // 3. Religion
+  // 4. Minor
+  // Senior classes get a very high base value so they’re normally scheduled last.
   function computePriority(cls) {
     let basePriority;
     if (cls.is_senior_class === true) {
@@ -326,7 +322,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const allowedElectives = getAllowedElectives(allCourses, selectedCourseIds);
       console.log("Allowed elective classes count:", allowedElectives.length);
 
-      // Build required classes.
+      // Build required classes:
       // For English, extract classes from the selected English course.
       const selectedEnglishCourse = allCourses.find(course =>
         course.course_name === englishLevel
@@ -341,21 +337,26 @@ document.addEventListener('DOMContentLoaded', async () => {
       const englishDetails = await englishRes.json();
       const englishClasses = extractClasses(englishDetails, false, "english");
 
-      // For Religion, Major, and Minor, use all courses from allCourses that are of these types.
+      // For Major and Minor courses, only include those whose IDs are in selectedCourseIds.
       let requiredClasses = [];
       allCourses.forEach(course => {
-        if (
-          course.course_type &&
-          (course.course_type.toLowerCase() === "major" ||
-           course.course_type.toLowerCase() === "minor" ||
-           course.course_type.toLowerCase() === "religion")
-        ) {
-          const isMajor = course.course_type.toLowerCase() === "major";
-          const category = isMajor ? "major" : (course.course_type.toLowerCase() === "minor" ? "minor" : "religion");
-          const courseClasses = extractClasses(course, isMajor, category);
-          requiredClasses = requiredClasses.concat(courseClasses);
+        if (course.course_type) {
+          const lowerType = course.course_type.toLowerCase();
+          if (lowerType === "major" || lowerType === "minor") {
+            if (selectedCourseIds.includes(course.id)) {
+              const isMajor = lowerType === "major";
+              const category = isMajor ? "major" : "minor";
+              const courseClasses = extractClasses(course, isMajor, category);
+              requiredClasses = requiredClasses.concat(courseClasses);
+            }
+          } else if (lowerType === "religion") {
+            // Religion courses are global.
+            const courseClasses = extractClasses(course, false, "religion");
+            requiredClasses = requiredClasses.concat(courseClasses);
+          }
         }
       });
+
       // Combine English classes with required classes, filtering out electives.
       requiredClasses = englishClasses.concat(requiredClasses).filter(cls => !cls.is_elective);
       // Also filter out any classes that do not clearly belong to one of our four categories.
@@ -420,7 +421,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       function computePriority(cls) {
         let basePriority;
         if (cls.is_senior_class === true) {
-          basePriority = 100;
+          basePriority = 100; // Senior classes get lowest priority.
         } else if (cls.category === "english") {
           basePriority = 1;
         } else if (cls.category === "major") {
@@ -720,7 +721,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // Close search results when clicking outside
 document.addEventListener('click', function(event) {
-    // Check if the click was outside the search groups
     const isClickInsideMajorSearch = 
         document.getElementById('major-search-group')?.contains(event.target) || false;
     const isClickInsideMinor1Search = 
@@ -728,9 +728,7 @@ document.addEventListener('click', function(event) {
     const isClickInsideMinor2Search = 
         document.getElementById('minor2-search-group')?.contains(event.target) || false;
     
-    // If click was outside all search areas
     if (!isClickInsideMajorSearch && !isClickInsideMinor1Search && !isClickInsideMinor2Search) {
-        // Hide all search results
         const majorResults = document.getElementById('majorSearchResults');
         const minor1Results = document.getElementById('minor1SearchResults');
         const minor2Results = document.getElementById('minor2SearchResults');
@@ -741,23 +739,19 @@ document.addEventListener('click', function(event) {
     }
 });
 
-/* Add click-outside functionality with JavaScript */
 document.addEventListener('click', function(event) {
-  // Check if click was outside search groups
   const searchGroups = [
       'major-search-group', 
       'minor1-search-group', 
       'minor2-search-group'
   ];
   
-  // If click wasn't inside any search group
   const isClickInsideSearchGroup = searchGroups.some(id => {
       const element = document.getElementById(id);
       return element && element.contains(event.target);
   });
   
   if (!isClickInsideSearchGroup) {
-      // Hide all search results
       for (const id of ['majorSearchResults', 'minor1SearchResults', 'minor2SearchResults']) {
           const results = document.getElementById(id);
           if (results) results.style.display = 'none';
@@ -765,10 +759,7 @@ document.addEventListener('click', function(event) {
   }
 });
 
-// Modify your existing search functions to show results
 function setupSearchInputs() {
-    // For each search input (majorSearchInput, minor1SearchInput, etc.)
-    // When input changes, show search results
     const searchInputs = [
         { input: 'majorSearchInput', results: 'majorSearchResults' },
         { input: 'minor1SearchInput', results: 'minor1SearchResults' },
@@ -781,12 +772,10 @@ function setupSearchInputs() {
         
         if (input && resultsList) {
             input.addEventListener('input', function() {
-                // Show results below input when typing
                 if (this.value.trim() !== '') {
-                    resultsList.style.display = 'block';
-                    // Your existing search logic
+                    resultsList.style.display = "block";
                 } else {
-                    resultsList.style.display = 'none';
+                    resultsList.style.display = "none";
                 }
             });
         }

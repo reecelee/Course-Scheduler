@@ -1183,6 +1183,11 @@ function renderSchedule(schedule) {
         <span class="class-credits">${cls.credits || 3} cr</span>
       `;
       
+      // NEW: Add click event to show class details
+      classItem.addEventListener('click', () => {
+        showClassDetailsPopup(cls);
+      });
+      
       classesList.appendChild(classItem);
     });
     
@@ -1651,4 +1656,87 @@ function getScheduleAsJson(schedule) {
   }));
 
   return JSON.stringify(cleanSchedule, null, 2); // Pretty-print with 2-space indentation
+}
+
+// First, add this function to render a class details popup
+function showClassDetailsPopup(cls) {
+  // Create modal container if it doesn't exist
+  let modal = document.getElementById('class-details-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'class-details-modal';
+    modal.className = 'modal';
+    document.body.appendChild(modal);
+    
+    // Close modal when clicking outside
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  }
+  
+  // Format prerequisites nicely
+  const prerequisites = cls.prerequisites && Array.isArray(cls.prerequisites) && cls.prerequisites.length > 0
+    ? cls.prerequisites.map(prereq => {
+        const prereqId = typeof prereq === 'object' ? prereq.id || prereq.class_id : prereq;
+        const prereqClass = classesById[prereqId];
+        return prereqClass ? `${prereqClass.class_number || 'Unknown'}: ${prereqClass.class_name || 'Unknown'}` : 'Unknown';
+      }).join('<br>')
+    : 'None';
+  
+  // Format corequisites nicely
+  const corequisites = cls.corequisites && Array.isArray(cls.corequisites) && cls.corequisites.length > 0
+    ? cls.corequisites.map(coreq => {
+        const coreqId = typeof coreq === 'object' ? coreq.id || coreq.class_id : coreq;
+        const coreqClass = classesById[coreqId];
+        return coreqClass ? `${coreqClass.class_number || 'Unknown'}: ${coreqClass.class_name || 'Unknown'}` : 'Unknown';
+      }).join('<br>')
+    : 'None';
+  
+  // Format semesters offered
+  const semestersOffered = cls.semesters_offered && Array.isArray(cls.semesters_offered) && cls.semesters_offered.length > 0
+    ? cls.semesters_offered.join(', ')
+    : 'Any semester';
+  
+  // Build modal content
+  const modalContent = `
+    <div class="modal-content class-details">
+      <span class="close">&times;</span>
+      <h2>${cls.class_number || 'Unknown'}</h2>
+      <h3>${cls.class_name || 'Unknown'}</h3>
+      
+      <div class="class-details-info">
+        <p><strong>Credits:</strong> ${cls.credits || 3}</p>
+        <p><strong>Semesters Offered:</strong> ${semestersOffered}</p>
+        
+        <div class="details-section">
+          <h4>Prerequisites:</h4>
+          <p>${prerequisites}</p>
+        </div>
+        
+        <div class="details-section">
+          <h4>Corequisites:</h4>
+          <p>${corequisites}</p>
+        </div>
+        
+        ${cls.description ? `<div class="details-section">
+          <h4>Description:</h4>
+          <p>${cls.description}</p>
+        </div>` : ''}
+      </div>
+    </div>
+  `;
+  
+  // Update modal content and display it
+  modal.innerHTML = modalContent;
+  modal.style.display = 'block';
+  
+  // Add close button functionality
+  const closeButton = modal.querySelector('.close');
+  if (closeButton) {
+    closeButton.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+  }
 }

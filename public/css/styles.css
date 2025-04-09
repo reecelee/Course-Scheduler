@@ -1207,9 +1207,11 @@ select:focus {
   transition: all 0.3s ease;
 }
 
+/* Remove hover animation from semester cards */
 .semester-card:hover {
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  transform: translateY(-3px);
+  /* Remove the translateY and keep only the shadow for subtle enhancement */
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  transform: none; /* Remove the jumping effect */
 }
 
 .semester-header {
@@ -1234,10 +1236,26 @@ select:focus {
   flex-direction: column; /* Keep column direction as requested */
   position: relative; /* For absolute positioning of the bar */
   gap: 4px;
+  cursor: pointer; /* Show pointer cursor to indicate clickability */
+  transition: all 0.2s ease; /* Smooth transition for hover effects */
 }
 
-.class-item:last-child {
-  border-bottom: none;
+/* Individual class item hover effect */
+.class-item:hover {
+  background-color: #f8f8f8; /* Light background on hover */
+  padding-left: 14px; /* Slightly shift right on hover */
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05); /* Subtle inner shadow */
+  transform: scale(1.01); /* Very subtle scale effect */
+}
+
+/* Add a visual indicator for clickability */
+.class-item:hover::after {
+  content: "👆 Click for details"; /* Emoji and text indicating action */
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+  font-style: italic;
 }
 
 /* Convert class-tag to a vertical bar positioned on the left side */
@@ -1448,6 +1466,69 @@ select:focus {
 
 .export-button:hover {
   background-color: #d6a22f;
+}
+
+/* Add to styles.css */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+}
+
+.modal-content {
+  background-color: white;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 15px;
+  max-width: 600px;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
+
+.close:hover {
+  color: black;
+}
+
+.class-details h2 {
+  margin: 0;
+  color: #ba0c2f;
+}
+
+.class-details h3 {
+  margin-top: 5px;
+  color: #333;
+}
+
+.class-details-info {
+  margin-top: 15px;
+}
+
+.details-section {
+  margin-top: 15px;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.details-section h4 {
+  margin: 0 0 5px 0;
+  color: #666;
 }
 
 
